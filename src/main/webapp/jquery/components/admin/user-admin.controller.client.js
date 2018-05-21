@@ -46,13 +46,13 @@
             dob, role);
 
         userService
-            .createUser(user)
+            .createUser(user, defaultCallback)
             .then(findAllUsers);
     }
 
     function findAllUsers() {
         userService
-            .findAllUsers()
+            .findAllUsers(defaultCallback)
             .then(renderUsers);
     }
 
@@ -64,7 +64,7 @@
             .attr('id');
 
         userService
-            .findUserById(userId)
+            .findUserById(userId, defaultCallback)
             .then(renderUser);
 
         updateId = userId;
@@ -78,7 +78,7 @@
             .attr('id');
 
         userService
-            .deleteUser(userId)
+            .deleteUser(userId, defaultCallback)
             .then(findAllUsers);
     }
 
@@ -98,7 +98,7 @@
             dob, role);
 
         userService
-            .updateUser(updateId, user)
+            .updateUser(updateId, user, defaultCallback)
             .then(renderUsers);
     }
 
@@ -134,5 +134,10 @@
 
             $tbody.append(clone);
         }
+    }
+
+    function defaultCallback(response) {
+        console.log(response);
+        return response;
     }
 })();
