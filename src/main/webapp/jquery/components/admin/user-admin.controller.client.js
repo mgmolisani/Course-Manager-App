@@ -6,7 +6,7 @@
     var $removeBtn, $editBtn, $createBtn;
     var $userRowTemplate, $tbody;
     var updateId;
-    var userService = new AdminUserServiceClient();
+    var userService = new UserServiceClient();
 
     $(main);
 
