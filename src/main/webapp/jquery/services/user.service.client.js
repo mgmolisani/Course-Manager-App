@@ -8,21 +8,22 @@ function UserServiceClient() {
 
     var self = this;
 
-    function createUser(user, callback) {
+    function createUser(user/*, callback*/) {
         return fetch(self.url, {
             method: 'POST',
             body: JSON.stringify(user),
             headers: {
                 'content-type': 'application/json'
             }
-        }).then(callback);
+        });//.then(callback);
     }
 
-    function findAllUsers(callback) {
+    function findAllUsers(/*callback*/) {
         return fetch(self.url)
             .then(function (response) {
+                console.log(response)
                 return response.json();
-            }).then(callback);
+            });//.then(callback);
     }
 
     function findUserById(userId, callback) {

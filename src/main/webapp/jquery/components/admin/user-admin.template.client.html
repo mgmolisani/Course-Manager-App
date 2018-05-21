@@ -8,8 +8,11 @@
 		<link rel="stylesheet" href=
 				"https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
 		<link href="user-admin.style.client.css" rel="stylesheet"/>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="../services/user.service.client.js"></script>
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+				integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+				crossorigin="anonymous"></script>
+		<script src="../../services/user.service.client.js"></script>
+		<script src="../../models/user.model.client.js"></script>
 		<script src="user-admin.controller.client.js"></script>
 	</head>
 	<body>
@@ -28,21 +31,19 @@
 						<th>Role</th>
 						<th></th>
 					</tr>
-				</thead>
-				<tbody>
 					<tr class="wbdv-form">
 						<th><input id="usernameFld" class="form-control"
-						           placeholder="Username"/></th>
+								   placeholder="Username"/></th>
 						<th><input id="passwordFld" type="password" class="form-control"
-						           placeholder="Password"/></th>
+								   placeholder="Password"/></th>
 						<th><input id="firstNameFld" class="form-control"
-						           placeholder="First Name"/></th>
+								   placeholder="First Name"/></th>
 						<th><input id="lastNameFld" class="form-control"
-						           placeholder="Last Name"/></th>
+								   placeholder="Last Name"/></th>
 						<th><input id="phoneNumberFld" type="tel" class="form-control"
-						           placeholder="XXX-XXX-XXXX"/></th>
+								   placeholder="XXX-XXX-XXXX"/></th>
 						<th><input id="emailFld" type="email" class="form-control"
-						           placeholder="email@url.com"/></th>
+								   placeholder="email@url.com"/></th>
 						<th><input id="dobFld" type="date" class="form-control"/></th>
 						<th><select id="roleFld" class="form-control">
 							<option value="FACULTY">Faculty</option>
@@ -55,6 +56,8 @@
 								class="fa-2x fa fa-check wbdv-update btn btn-primary"></i></span>
 						</th>
 					</tr>
+				</thead>
+				<tbody>
 					<tr class="wbdv-template wbdv-user wbdv-hidden">
 						<td class="wbdv-username">ada</td>
 						<td>**********</td>

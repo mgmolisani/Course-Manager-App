@@ -3,7 +3,7 @@
     var $firstNameFld, $lastNameFld;
     var $phoneNumberFld, $emailFld;
     var $dobFld, $roleFld;
-    var $removeBtn, $editBtn, $createBtn;
+    var $removeBtn, $editBtn, $createBtn, $updateBtn;
     var $userRowTemplate, $tbody;
     var updateId;
     var userService = new UserServiceClient();
@@ -12,7 +12,7 @@
 
     function main() {
         $tbody = $('tbody');
-        $userRowTemplate = $('wbdv-template');
+        $userRowTemplate = $('.wbdv-template');
         $usernameFld = $('#usernameFld');
         $passwordFld = $('#passwordFld');
         $firstNameFld = $('#firstNameFld');
@@ -22,9 +22,10 @@
         $dobFld = $('#dobFld');
         $roleFld = $('#roleFld');
 
-        $removeBtn = $('wbdv-remove').click(deleteUser);
-        $editBtn = $('wbdv-edit').click(findUserById);
-        $createBtn = $('wbdv-create').click(createUser);
+        $removeBtn = $('.wbdv-remove').click(deleteUser);
+        $editBtn = $('.wbdv-edit').click(findUserById);
+        $createBtn = $('.wbdv-create').click(createUser);
+        $updateBtn = $('.wbdv-update').click(updateUser);
 
         findAllUsers();
     }
@@ -39,20 +40,21 @@
         var dob = $dobFld.val();
         var role = $roleFld.val();
 
-
         var user = new User(username, password,
             firstName, lastName,
             phoneNumber, email,
             dob, role);
 
+        console.log(user);
+
         userService
-            .createUser(user, defaultCallback)
+            .createUser(user/*, defaultCallback*/)
             .then(findAllUsers);
     }
 
     function findAllUsers() {
         userService
-            .findAllUsers(defaultCallback)
+            .findAllUsers(/*defaultCallback*/)
             .then(renderUsers);
     }
 
