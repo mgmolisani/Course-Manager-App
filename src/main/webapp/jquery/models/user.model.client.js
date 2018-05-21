@@ -1,4 +1,4 @@
-function User(username, password, lastName, lastName,
+function User(username, password, firstName, lastName,
               phoneNumber, email, dateOfBirth, role) {
     this.username = username;
     this.password = password;
