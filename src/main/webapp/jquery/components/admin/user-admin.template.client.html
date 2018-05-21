@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>User Admin</title>
+		<link rel="stylesheet" href=
+				"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href=
+				"https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+		<link href="user-admin.style.client.css" rel="stylesheet"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="../services/user.service.client.js"></script>
+		<script src="user-admin.controller.client.js"></script>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<h1>User Admin</h1>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Username</th>
+						<th>Password</th>
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>Phone Number</th>
+						<th>Email</th>
+						<th>Date of Birth</th>
+						<th>Role</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="wbdv-form">
+						<th><input id="usernameFld" class="form-control"
+						           placeholder="Username"/></th>
+						<th><input id="passwordFld" type="password" class="form-control"
+						           placeholder="Password"/></th>
+						<th><input id="firstNameFld" class="form-control"
+						           placeholder="First Name"/></th>
+						<th><input id="lastNameFld" class="form-control"
+						           placeholder="Last Name"/></th>
+						<th><input id="phoneNumberFld" type="tel" class="form-control"
+						           placeholder="XXX-XXX-XXXX"/></th>
+						<th><input id="emailFld" type="email" class="form-control"
+						           placeholder="email@url.com"/></th>
+						<th><input id="dobFld" type="date" class="form-control"/></th>
+						<th><select id="roleFld" class="form-control">
+							<option value="FACULTY">Faculty</option>
+							<option value="STUDENT">Student</option>
+						</select>
+						</th>
+						<th><span class="float-right" style="white-space: nowrap">
+							<i class="fa-2x fa fa-search wbdv-search btn btn-secondary"></i> <i
+								class="fa-2x fa fa-plus wbdv-create btn btn-success"></i> <i
+								class="fa-2x fa fa-check wbdv-update btn btn-primary"></i></span>
+						</th>
+					</tr>
+					<tr class="wbdv-template wbdv-user wbdv-hidden">
+						<td class="wbdv-username">ada</td>
+						<td>**********</td>
+						<td class="wbdv-first-name">Ada</td>
+						<td class="wbdv-last-name">Lovelace</td>
+						<td class="wbdv-role">FACULTY</td>
+						<td class="wbdv-actions">
+					        <span class="float-right">
+						        <i id="wbdv-remove" class="fa-2x fa fa-times wbdv-remove btn btn-danger"></i>
+						        <i id="wbdv-edit" class="fa-2x fa fa-pencil wbdv-edit btn btn-primary"></i>
+					        </span>
+						</td>
+					</tr>
+
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>
