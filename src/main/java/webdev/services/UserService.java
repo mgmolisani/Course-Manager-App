@@ -1,5 +1,7 @@
 package webdev.services;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,13 +14,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
+
 import webdev.models.User;
 import webdev.repositories.UserRepository;
 
 @RestController
 public class UserService {
   @Autowired
-  UserRepository repository;
+  private UserRepository repository;
+  private List<User> users = new ArrayList<>();
 
   @PostMapping("/api/user")
   public User createUser(@RequestBody User user) {
@@ -34,6 +39,22 @@ public class UserService {
   public User findUserById(@PathVariable("userId") int userId) {
     Optional<User> data = repository.findById(userId);
     return data.orElse(null);
+  }
+
+  private User findUserByUsername(String username) {
+    Iterator<User> matchingUsers = repository.findUserByUsername(username).iterator();
+    //Selects the first user in the returned list if any matching users exist.
+    if (matchingUsers.hasNext()) {
+      return matchingUsers.next();
+    }
+    return null;
+  }
+
+  @PostMapping("/api/register")
+  public User register(@RequestBody User user, HttpSession session) {
+    session.setAttribute("currentUser", user);
+    users.add(user);
+    return user;
   }
 
   @PutMapping("/api/user/{userId}")

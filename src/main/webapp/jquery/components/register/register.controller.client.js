@@ -19,7 +19,14 @@
 
         if (password === verifyPassword && username != null) {
             userService
-                .register(username, password);
+                .register(username, password,
+                          function(response) {
+                    if (response === null) {
+                        alert('User account could not be created');
+                    } else {
+                        alert('Welcome, ' + username);
+                    }
+                });
         }
     }
 })();
