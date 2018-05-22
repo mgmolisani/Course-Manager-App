@@ -1,11 +1,15 @@
 package webdev.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
+
 import javax.persistence.*;
 
 @Entity
 public class User {
   @Id
-  @GeneratedValue(strategy=GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
   private String username;
   private String password;
@@ -13,8 +17,13 @@ public class User {
   private String lastName;
   private String phone;
   private String email;
-  private String dateOfBirth;
+  @DateTimeFormat(pattern = "MM/dd/YYYY")
+  private LocalDate dateOfBirth;
   private String role;
+  
+  public User() {
+	  super();
+  }
 
   public int getId() {
     return id;
@@ -72,11 +81,11 @@ public class User {
     this.email = email;
   }
 
-  public String getDateOfBirth() {
+  public LocalDate getDateOfBirth() {
     return dateOfBirth;
   }
 
-  public void setDateOfBirth(String dateOfBirth) {
+  public void setDateOfBirth(LocalDate dateOfBirth) {
     this.dateOfBirth = dateOfBirth;
   }
 

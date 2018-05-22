@@ -22,8 +22,6 @@
         $dobFld = $('#dobFld');
         $roleFld = $('#roleFld');
 
-        $removeBtn = $('.wbdv-remove').click(deleteUser);
-        $editBtn = $('.wbdv-edit').click(findUserById);
         $createBtn = $('.wbdv-create').click(createUser);
         $updateBtn = $('.wbdv-update').click(updateUser);
 
@@ -45,43 +43,39 @@
             phoneNumber, email,
             dob, role);
 
-        console.log(user);
-
         userService
-            .createUser(user/*, defaultCallback*/)
-            .then(findAllUsers);
+            .createUser(user, findAllUsers);
     }
 
     function findAllUsers() {
         userService
-            .findAllUsers(/*defaultCallback*/)
-            .then(renderUsers);
+            .findAllUsers(renderUsers);
     }
 
     function findUserById(event) {
-        var userId = $(event.currentTarget)
+        $editBtn = $(event.currentTarget);
+        var userId = $editBtn
             .parent()
             .parent()
             .parent()
             .attr('id');
 
-        userService
-            .findUserById(userId, defaultCallback)
-            .then(renderUser);
-
         updateId = userId;
+
+        userService
+            .findUserById(userId, renderUser);
     }
 
     function deleteUser(event) {
-        var userId = $(event.currentTarget)
+        $removeBtn = $(event.currentTarget);
+        var userId = $removeBtn
             .parent()
             .parent()
             .parent()
             .attr('id');
 
         userService
-            .deleteUser(userId, defaultCallback)
-            .then(findAllUsers);
+            .deleteUser(userId, findAllUsers);
     }
 
     function updateUser() {
@@ -100,15 +94,14 @@
             dob, role);
 
         userService
-            .updateUser(updateId, user, defaultCallback)
-            .then(renderUsers);
+            .updateUser(updateId, user, findAllUsers);
     }
 
     function renderUser(user) {
         $usernameFld.val(user.username);
         $firstNameFld.val(user.firstName);
         $lastNameFld.val(user.lastName);
-        $phoneNumberFld.val(user.phoneNumber);
+        $phoneNumberFld.val(user.phone);
         $emailFld.val(user.email);
         $dobFld.val(user.dateOfBirth);
         $roleFld.val(user.role);
@@ -118,6 +111,7 @@
         $tbody.empty();
         for(var i = 0; i < users.length; i++) {
             var user = users[i];
+
             var clone = $userRowTemplate.clone();
 
             clone.attr('id', user.id);
@@ -126,20 +120,15 @@
             clone.find('.wbdv-username').html(user.username);
             clone.find('.wbdv-first-name').html(user.firstName);
             clone.find('.wbdv-last-name').html(user.lastName);
-            clone.find('.wbdv-phone-number').html(user.phoneNumber);
+            clone.find('.wbdv-phone-number').html(user.phone);
             clone.find('.wbdv-email').html(user.email);
             clone.find('.wbdv-dob').html(user.dateOfBirth);
             clone.find('.wbdv-role').html(user.role);
 
             clone.find('.wbdv-remove').click(deleteUser);
-            clone.find('.wbdv-edit').click(updateUser);
+            clone.find('.wbdv-edit').click(findUserById);
 
             $tbody.append(clone);
         }
-    }
-
-    function defaultCallback(response) {
-        console.log(response);
-        return response;
     }
 })();
