@@ -4,6 +4,7 @@ function UserServiceClient() {
     this.findUserById = findUserById;
     this.deleteUser = deleteUser;
     this.updateUser = updateUser;
+    this.register = register;
     this.userUrl = '/api/user';
     this.registerUrl = '/api/register';
 
@@ -60,10 +61,7 @@ function UserServiceClient() {
     function register(user, callback) {
         return fetch(self.registerUrl, {
             method: 'POST',
-            body: JSON.stringify({
-                                     username: username,
-                                     password: password
-                                 }),
+            body: JSON.stringify(user),
             headers: {
                 'content-type': 'application/json'
             }

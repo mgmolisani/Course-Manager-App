@@ -52,9 +52,13 @@ public class UserService {
 
   @PostMapping("/api/register")
   public User register(@RequestBody User user, HttpSession session) {
-    session.setAttribute("currentUser", user);
-    users.add(user);
-    return user;
+    if (findUserByUsername(user.getUsername()) == null) {
+      session.setAttribute("user", user);
+      users.add(user);
+      return createUser(user);
+    } else {
+      return null;
+    }
   }
 
   @PutMapping("/api/user/{userId}")

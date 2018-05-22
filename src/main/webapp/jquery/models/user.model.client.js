@@ -61,7 +61,7 @@
         return self.lastName;
     }
 
-    function setPhone(phoneNumber) {
+    function setPhone(phone) {
         self.phone = phone;
     }
 
@@ -92,5 +92,4 @@
     function getRole() {
         return self.role;
     }
-
 }
