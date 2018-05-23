@@ -10,7 +10,6 @@
         $passwordFld = $('#passwordFld');
         $verifyPasswordFld = $('#verifyPasswordFld');
         $registerBtn = $('#registerBtn').click(register);
-        console.log(userService.getAttr('user'));
     }
 
     function register() {
@@ -18,16 +17,19 @@
         var password = $passwordFld.val();
         var verifyPassword = $verifyPasswordFld.val();
 
-        if (password === verifyPassword && username !== '') {
+        if (username === '' || password === '') {
+            alert('Username and password fields cannot be blank');
+        } else if (password !== verifyPassword) {
+            alert('Password verification failed.');
+        } else {
             var user = new User(username, password);
             userService
-                .register(user, function(response) {
-                    if (response === null) {
-                        alert('User account could not be created');
-                    } else {
-                        alert('Welcome, ' + username);
-                    }
-                });
+                .register(user, function() {
+                    alert('Welcome, ' + username);
+                    window.location.assign('../admin/user-admin.template.client.html');
+                }).catch(function(error) {
+                    alert(error.message);
+            });
         }
     }
 })();

@@ -36,9 +36,12 @@ public class UserService {
   }
 
   @GetMapping("/api/user/{userId}")
-  public User findUserById(@PathVariable("userId") int userId) {
+  public User findUserById(@PathVariable("userId") int userId) throws Exception {
     Optional<User> data = repository.findById(userId);
-    return data.orElse(null);
+    if (data.isPresent()) {
+      return data.get();
+    }
+    throw new Exception("No user found with id = " + userId);
   }
 
   private User findUserByUsername(String username) {
@@ -51,18 +54,18 @@ public class UserService {
   }
 
   @PostMapping("/api/register")
-  public User register(@RequestBody User user, HttpSession session) {
+  public User register(@RequestBody User user, HttpSession session) throws Exception {
     if (findUserByUsername(user.getUsername()) == null) {
       session.setAttribute("user", user);
       users.add(user);
       return createUser(user);
     } else {
-      return null;
+      throw new Exception("Username already exists.");
     }
   }
 
   @PutMapping("/api/user/{userId}")
-  public User updateUser(@PathVariable("userId") int userId, @RequestBody User newUser) {
+  public User updateUser(@PathVariable("userId") int userId, @RequestBody User newUser) throws Exception {
     Optional<User> data = repository.findById(userId);
     if (data.isPresent()) {
       User user = data.get();
@@ -76,11 +79,31 @@ public class UserService {
       repository.save(user);
       return user;
     }
-    return null;
+    throw new Exception("No user found with id = " + userId);
   }
 
   @DeleteMapping("/api/user/{userId}")
   public void deleteUser(@PathVariable("userId") int id) {
     repository.deleteById(id);
+  }
+
+  private User findUserByCredentials(String username, String password) {
+    Iterator<User> matchingUsers = repository.findUserByCredentials(username, password).iterator();
+    //Selects the first user in the returned list if any matching users exist.
+    if (matchingUsers.hasNext()) {
+      return matchingUsers.next();
+    }
+    return null;
+  }
+
+  @PostMapping("/api/login")
+  public User login(@RequestBody User user, HttpSession session) throws Exception {
+    User foundUser = this.findUserByCredentials(user.getUsername(), user.getPassword());
+    if (foundUser != null) {
+      session.setAttribute("user", user);
+      users.add(user);
+      return foundUser;
+    }
+    throw new Exception("Could not find user");
   }
 }

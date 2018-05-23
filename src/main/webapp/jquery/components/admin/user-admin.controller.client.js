@@ -80,7 +80,6 @@
 
     function updateUser() {
         var username = $usernameFld.val();
-        var password = $passwordFld.val();
         var firstName = $firstNameFld.val();
         var lastName = $lastNameFld.val();
         var phoneNumber = $phoneNumberFld.val();
@@ -88,7 +87,7 @@
         var dob = $dobFld.val();
         var role = $roleFld.val();
 
-        var user = new User(username, password,
+        var user = new User(username, null,
             firstName, lastName,
             phoneNumber, email,
             dob, role);
