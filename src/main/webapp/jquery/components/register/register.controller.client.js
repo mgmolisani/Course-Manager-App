@@ -24,9 +24,9 @@
         } else {
             var user = new User(username, password);
             userService
-                .register(user, function() {
+                .register(user, function(newUser) {
                     alert('Welcome, ' + username);
-                    window.location.assign('../admin/user-admin.template.client.html');
+                    window.location.assign('../profile/profile.template.client.html?userId=' + newUser.id);
                 }).catch(function(error) {
                     alert(error.message);
             });

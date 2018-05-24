@@ -18,8 +18,8 @@
         var user = new User(username, password);
 
         userService
-            .login(user, function() {
-                window.location.assign('../profile/profile.template.client.html');
+            .login(user, function(currentUser) {
+                window.location.assign('../profile/profile.template.client.html?userId=' + currentUser.id);
             }).catch(function(error) {
                 alert(error.message);
             });

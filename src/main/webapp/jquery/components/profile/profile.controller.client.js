@@ -4,29 +4,35 @@
     var $phoneNumberFld, $emailFld;
     var $dobFld, $roleFld;
     var $logoutBtn, $updateBtn;
+    var userId;
     var userService = new UserServiceClient();
 
     $(main);
 
     function main() {
-        $usernameFld = $('#usernameFld');
-        $firstNameFld = $('#firstNameFld');
-        $lastNameFld = $('#lastNameFld');
-        $phoneNumberFld = $('#phoneNumberFld');
-        $emailFld = $('#emailFld');
-        $dobFld = $('#dateOfBirthFld');
-        $roleFld = $('#roleFld');
-        $updateBtn = $('#updateBtn').click(updateProfile);
-        $logoutBtn = $('#logoutBtn').click(logout);
+        userId = getQueryVariable('userId');
+        if (userId === null) {
+            alert('No user is logged in.')
+            window.location.assign('../login/login.template.client.html');
+        } else {
+            $usernameFld = $('#usernameFld');
+            $firstNameFld = $('#firstNameFld');
+            $lastNameFld = $('#lastNameFld');
+            $phoneNumberFld = $('#phoneNumberFld');
+            $emailFld = $('#emailFld');
+            $dobFld = $('#dateOfBirthFld');
+            $roleFld = $('#roleFld');
+            $updateBtn = $('#updateBtn').click(updateProfile);
+            $logoutBtn = $('#logoutBtn').click(logout);
+
+            userId = getQueryVariable('userId');
+
+            renderProfile();
+        }
     }
 
     function logout() {
-        userService
-            .logout(function() {
-                window.location.assign('../login/login.template.client.html');
-            }).catch(function(error) {
-                alert(error.message);
-            });
+        window.location.assign('../login/login.template.client.html');
     }
 
     function updateProfile() {
@@ -44,10 +50,40 @@
                             dob, role);
 
         userService
-            .login(user, function() {
+            .updateProfile(userId, user, function () {
                 alert('Profile updated successfully.');
-            }).catch(function(error) {
+            }).catch(function (error) {
             alert(error.message);
         });
+    }
+
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) {
+                return pair[1];
+            }
+        }
+        return (null);
+    }
+
+    function renderProfile() {
+        if (userId) {
+            userService
+                .findUserById(userId, function (currentUser) {
+                    console.log(currentUser);
+                    $usernameFld.val(currentUser.username);
+                    $firstNameFld.val(currentUser.firstName);
+                    $lastNameFld.val(currentUser.lastName);
+                    $phoneNumberFld.val(currentUser.phone);
+                    $emailFld.val(currentUser.email);
+                    $dobFld.val(currentUser.dateOfBirth);
+                    $roleFld.val(currentUser.role);
+                });
+        } else {
+            throw new Error("User not logged in");
+        }
     }
 })();

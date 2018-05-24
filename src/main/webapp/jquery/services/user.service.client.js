@@ -2,13 +2,16 @@ function UserServiceClient() {
     this.createUser = createUser;
     this.findAllUsers = findAllUsers;
     this.findUserById = findUserById;
+    this.findUserByUsername = findUserByUsername;
     this.deleteUser = deleteUser;
     this.updateUser = updateUser;
     this.register = register;
     this.login = login;
+    this.updateProfile = updateProfile;
     this.userUrl = '/api/user';
     this.registerUrl = '/api/register';
     this.loginUrl = '/api/login';
+    this.profileUrl = '/api/profile';
 
     var self = this;
 
@@ -50,6 +53,17 @@ function UserServiceClient() {
             });
     }
 
+    function findUserByUsername(username, callback) {
+        return fetch(self.userUrl + '?' + username)
+            .then(function (response) {
+                var responseJson = response.json();
+                if (response.ok) {
+                    return responseJson.then(callback);
+                }
+                return responseJson.then(errorCallback);
+            });
+    }
+
     function updateUser(userId, user, callback) {
         return fetch(self.userUrl + '/' + userId, {
                                                       method: 'PUT',
@@ -57,13 +71,35 @@ function UserServiceClient() {
                                                       headers: {
                                                           'content-type': 'application/json'
                                                       }
-                                                  }).then(function (response) {
-            if (response.bodyUsed) {
-                return response.json();
-            } else {
-                return null;
-            }
-        }).then(callback);
+                                                  })
+            .then(function (response) {
+                var responseJson = response.json();
+                if (response.ok) {
+                    return responseJson.then(
+                        callback);
+                }
+                return responseJson.then(
+                    errorCallback);
+            });
+    }
+
+    function updateProfile(userId, user, callback) {
+        return fetch(self.profileUrl + '/' + userId, {
+                                                         method: 'PUT',
+                                                         body: JSON.stringify(user),
+                                                         headers: {
+                                                             'content-type': 'application/json'
+                                                         }
+                                                     })
+            .then(function (response) {
+                var responseJson = response.json();
+                if (response.ok) {
+                    return responseJson.then(
+                        callback);
+                }
+                return responseJson.then(
+                    errorCallback);
+            });
     }
 
     function deleteUser(userId, callback) {
