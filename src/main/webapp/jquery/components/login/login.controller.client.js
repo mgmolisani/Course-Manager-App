@@ -19,7 +19,7 @@
 
         userService
             .login(user, function() {
-                window.location.assign('../admin/user-admin.template.client.html');
+                window.location.assign('../profile/profile.template.client.html');
             }).catch(function(error) {
                 alert(error.message);
             });
