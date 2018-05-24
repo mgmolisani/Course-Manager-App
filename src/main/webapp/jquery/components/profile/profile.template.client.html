@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Sign In</title>
+    <link rel="stylesheet" href=
+            "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href=
+            "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link href="profile.style.client.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../../services/user.service.client.js" type="text/javascript"></script>
+    <script src="../../models/user.model.client.js" type="text/javascript"></script>
+    <script src="profile.controller.client.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="container">
+    <h1>Profile</h1>
+    <form>
+        <div class="form-group row">
+            <label for="usernameFld" class="col-sm-2 col-form-label">
+                Username </label>
+            <div class="col-sm-10">
+                <input class="form-control" id="usernameFld" readonly>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="firstNameFld" class="col-sm-2 col-form-label">
+                First Name </label>
+            <div class="col-sm-10">
+                <input class="form-control" id="firstNameFld">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="lastNameFld" class="col-sm-2 col-form-label">
+                Last Name </label>
+            <div class="col-sm-10">
+                <input class="form-control" id="lastNameFld">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="phoneNumberFld" class="col-sm-2 col-form-label">
+                Phone Number </label>
+            <div class="col-sm-10">
+                <input type="tel" class="form-control" id="phoneNumberFld">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="emailFld" class="col-sm-2 col-form-label">
+                Email </label>
+            <div class="col-sm-10">
+                <input type="email" class="form-control" id="emailFld">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="dateOfBirthFld" class="col-sm-2 col-form-label">
+                Date of Birth </label>
+            <div class="col-sm-10">
+                <input type="date" class="form-control" id="dateOfBirthFld">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="roleFld" class="col-sm-2 col-form-label">
+                Role </label>
+            <div class="col-sm-10">
+                <select class="form-control" id="roleFld">
+                    <option value="FACULTY">Faculty</option>
+                    <option value="STUDENT">Student</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <button id="updateBtn" type="button" class="btn btn-primary btn-block">Update</button>
+                <button id="logoutBtn" type="button" class="btn btn-danger btn-block">Logout</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
