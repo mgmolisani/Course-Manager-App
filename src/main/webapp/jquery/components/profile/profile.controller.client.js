@@ -9,12 +9,17 @@
 
     $(main);
 
+    /**
+     * Start the controller.
+     */
     function main() {
         userId = getQueryVariable('userId');
+        //Ensure the user is logged in before attempting to render the user or run and services
         if (userId === null) {
             alert('No user is logged in.')
             window.location.assign('../login/login.template.client.html');
         } else {
+            //Save fields as jQuery objects
             $usernameFld = $('#usernameFld');
             $firstNameFld = $('#firstNameFld');
             $lastNameFld = $('#lastNameFld');
@@ -22,6 +27,8 @@
             $emailFld = $('#emailFld');
             $dobFld = $('#dateOfBirthFld');
             $roleFld = $('#roleFld');
+
+            //Configure buttons
             $updateBtn = $('#updateBtn').click(updateProfile);
             $logoutBtn = $('#logoutBtn').click(logout);
 
@@ -31,10 +38,18 @@
         }
     }
 
+    /**
+     * Logout the user
+     */
     function logout() {
+        //Redirect to the login page
+        //No need for a serive here as we are not using sessions so a redirect is sufficient
         window.location.assign('../login/login.template.client.html');
     }
 
+    /**
+     * Update the user
+     */
     function updateProfile() {
         var username = $usernameFld.val();
         var firstName = $firstNameFld.val();
@@ -49,6 +64,7 @@
                             phoneNumber, email,
                             dob, role);
 
+        //Update the user and alert on success
         userService
             .updateProfile(userId, user, function () {
                 alert('Profile updated successfully.');
@@ -57,18 +73,26 @@
         });
     }
 
-    function getQueryVariable(variable) {
+    /**
+     * Find the value of the request parameter at the given key
+     * @param key the key to search for
+     * @returns the value at the key or null
+     */
+    function getQueryVariable(key) {
         var query = window.location.search.substring(1);
         var vars = query.split("&");
         for (var i = 0; i < vars.length; i++) {
             var pair = vars[i].split("=");
-            if (pair[0] == variable) {
+            if (pair[0] == key) {
                 return pair[1];
             }
         }
         return (null);
     }
 
+    /**
+     * Helper to render the user in the profile fields when the page is loaded
+     */
     function renderProfile() {
         if (userId) {
             userService
