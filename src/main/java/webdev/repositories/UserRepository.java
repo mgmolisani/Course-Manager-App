@@ -6,6 +6,9 @@ import org.springframework.data.repository.query.Param;
 
 import webdev.models.User;
 
+/**
+ * Interface to represent a user repository.
+ */
 public interface UserRepository extends CrudRepository<User, Integer> {
   @Query("SELECT u FROM User u WHERE u.username=:username")
   Iterable<User> findUserByUsername(

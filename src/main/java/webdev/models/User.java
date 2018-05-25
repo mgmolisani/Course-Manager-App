@@ -6,6 +6,9 @@ import java.time.LocalDate;
 
 import javax.persistence.*;
 
+/**
+ * A class that represents a user of the site with all of their credentials
+ */
 @Entity
 public class User {
   @Id
@@ -20,10 +23,15 @@ public class User {
   @DateTimeFormat(pattern = "MM/dd/YYYY")
   private LocalDate dateOfBirth;
   private String role;
-  
+
+  /**
+   * Creates a User.
+   */
   public User() {
 	  super();
   }
+
+  //Start of getters and setters
 
   public int getId() {
     return id;
@@ -96,4 +104,6 @@ public class User {
   public void setRole(String role) {
     this.role = role;
   }
+
+  // End of getters and setters
 }
