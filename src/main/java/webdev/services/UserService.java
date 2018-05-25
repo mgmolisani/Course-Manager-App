@@ -90,6 +90,23 @@ public class UserService {
   }
 
   /**
+   * Returns a user from a given username and password
+   * @param user the user containing the username and password
+   * @param session not currently used
+   * @return the user with the given credentials
+   * @throws Exception if no user is found with the given credentials
+   */
+  @PostMapping("/api/user/by-credentials")
+  public User findUserByCredentials(@RequestBody User user, HttpSession session) throws Exception {
+    Iterator<User> matchingUsers = repository.findUserByCredentials(user.getUsername(), user.getPassword()).iterator();
+    //Selects the first user in the returned list if any matching users exist.
+    if (matchingUsers.hasNext()) {
+      return matchingUsers.next();
+    }
+    throw new Exception("User does not exist.");
+  }
+
+  /**
    * Registers a new user and returns the user.
    *
    * @param user    the user to register
