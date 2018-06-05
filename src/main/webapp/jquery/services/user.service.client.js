@@ -28,6 +28,7 @@ function UserServiceClient() {
         return fetch(self.userUrl, {
             method: 'POST',
             body: JSON.stringify(user),
+            credentials: 'include',
             headers: {
                 'content-type': 'application/json'
             }
@@ -46,7 +47,8 @@ function UserServiceClient() {
      * @returns {Promise<Response>}
      */
     function findAllUsers(callback) {
-        return fetch(self.userUrl)
+        return fetch(self.userUrl,{
+            credentials: 'include'})
             .then(function (response) {
                 var responseJson = response.json();
                 if (response.ok) {
@@ -63,7 +65,8 @@ function UserServiceClient() {
      * @returns {Promise<Response>}
      */
     function findUserById(userId, callback) {
-        return fetch(self.userUrl + '/' + userId)
+        return fetch(self.userUrl + '/' + userId,{
+                                                     credentials: 'include'})
             .then(function (response) {
                 var responseJson = response.json();
                 if (response.ok) {
@@ -80,7 +83,8 @@ function UserServiceClient() {
      * @returns {Promise<Response>}
      */
     function findUserByUsername(username, callback) {
-        return fetch(self.userUrl + '?' + username)
+        return fetch(self.userUrl + '?' + username,{
+                                                       credentials: 'include'})
             .then(function (response) {
                 var responseJson = response.json();
                 if (response.ok) {
@@ -101,6 +105,7 @@ function UserServiceClient() {
         return fetch(self.userUrl + '/' + userId, {
                                                       method: 'PUT',
                                                       body: JSON.stringify(user),
+                                                      credentials: 'include',
                                                       headers: {
                                                           'content-type': 'application/json'
                                                       }
@@ -127,6 +132,7 @@ function UserServiceClient() {
         return fetch(self.profileUrl + '/' + userId, {
                                                          method: 'PUT',
                                                          body: JSON.stringify(user),
+                                                         credentials: 'include',
                                                          headers: {
                                                              'content-type': 'application/json'
                                                          }
@@ -150,7 +156,8 @@ function UserServiceClient() {
      */
     function deleteUser(userId, callback) {
         return fetch(self.userUrl + '/' + userId, {
-                                                      method: 'DELETE'
+                                                      method: 'DELETE',
+                                                      credentials: 'include'
                                                   })
             .then(function (response) {
                 if (response.ok) {
@@ -170,6 +177,7 @@ function UserServiceClient() {
         return fetch(self.registerUrl, {
             method: 'POST',
             body: JSON.stringify(user),
+            credentials: 'include',
             headers: {
                 'content-type': 'application/json'
             }
@@ -192,6 +200,7 @@ function UserServiceClient() {
         return fetch(self.loginUrl, {
             method: 'POST',
             body: JSON.stringify(user),
+            credentials: 'include',
             headers: {
                 'content-type': 'application/json'
             }
@@ -211,7 +220,9 @@ function UserServiceClient() {
      * @returns {Promise<Response>}
      */
     function forgotPassword(username, callback) {
-        return fetch(self.passwordUrl + "/" + username)
+        return fetch(self.passwordUrl + "/" + username,{
+                                                           credentials: 'include'
+        })
             .then(function (response) {
                 if (response.ok) {
                     return response.text().then(callback);
@@ -231,6 +242,7 @@ function UserServiceClient() {
         return fetch(self.passwordUrl + '/' + userId, {
                                                           method: 'PUT',
                                                           body: password,
+                                                          credentials: 'include',
                                                           headers: {
                                                               'content-type': 'text/plain'
                                                           }
