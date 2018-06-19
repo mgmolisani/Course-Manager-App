@@ -11,11 +11,17 @@ import java.util.Map;
 
 import javax.persistence.*;
 
+/**
+ * This class represents a single table inheritance of all widget types.
+ * We were asked to do inheritance with extension but the lectures did not go over that and instead just made
+ * one single large class (which is similar to how the table would have been made.
+ * This class also makes sub tables to handle the array of class names and the style object map.
+ */
 @Entity
 public class Widget {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
+  private int id;
   private String name;
   @Column(columnDefinition = "text")
   private String text;
@@ -50,11 +56,11 @@ public class Widget {
     super();
   }
 
-  public long getId() {
+  public int getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(int id) {
     this.id = id;
   }
 

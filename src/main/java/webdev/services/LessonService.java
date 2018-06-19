@@ -122,7 +122,7 @@ public class LessonService {
    * A custom error for lesson not found
    */
   @ResponseStatus(HttpStatus.NOT_FOUND)
-  public class LessonNotFoundException extends Exception {
+  public static class LessonNotFoundException extends Exception {
 
     public LessonNotFoundException() {
       super("Lesson could not be found.");
