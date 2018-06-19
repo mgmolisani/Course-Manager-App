@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -27,6 +28,8 @@ public class Lesson {
   @ManyToOne
   @JsonIgnore
   private Module module;
+  @OneToMany(mappedBy = "lesson", orphanRemoval = true)
+  private List<Widget> widgets;
 
   public Lesson() {
     super();
@@ -72,6 +75,14 @@ public class Lesson {
 
   public void setModule(Module module) {
     this.module = module;
+  }
+
+  public List<Widget> getWidgets() {
+    return widgets;
+  }
+
+  public void setWidgets(List<Widget> widgets) {
+    this.widgets = widgets;
   }
 
   //End of getters and setters
