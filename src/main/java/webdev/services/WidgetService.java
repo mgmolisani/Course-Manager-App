@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,6 +30,7 @@ public class WidgetService {
 
   /**
    * Gets all widgets
+   *
    * @return all widgets
    */
   @GetMapping("/api/widget")
@@ -40,6 +40,7 @@ public class WidgetService {
 
   /**
    * Gets a widget by its ID
+   *
    * @param widgetId the widget ID
    * @return the widget
    * @throws WidgetNotFoundException if the widget isnt found
@@ -55,6 +56,7 @@ public class WidgetService {
 
   /**
    * Gets all of a lessons widgets
+   *
    * @param lessonId the lesson to find
    * @return the widgets of the lesson
    * @throws Exception if the lesson isnt found
@@ -71,8 +73,9 @@ public class WidgetService {
 
   /**
    * Creates a new widget and returns it
+   *
    * @param lessonId the lesson to add to
-   * @param widget the new widget
+   * @param widget   the new widget
    * @return the widget reated
    * @throws LessonService.LessonNotFoundException if the lesson doesnt exist
    */
@@ -90,30 +93,39 @@ public class WidgetService {
 
   /**
    * Saves all of the widgets to the lesson
+   *
    * @param lessonId the lesson to save
-   * @param widgets the widgets to save to the lesson
+   * @param widgets  the widgets to save to the lesson
    * @throws LessonService.LessonNotFoundException if the lesson doesnt exist
    */
   @PostMapping("/api/lesson/{lessonId}/widget/save")
   public void saveAllWidgets(@PathVariable int lessonId, @RequestBody List<Widget> widgets) throws LessonService.LessonNotFoundException {
-    for (Widget widget : widgets) {
-      Optional<Lesson> data = lessonRepository.findById(lessonId);
-      if (data.isPresent()) {
-        Lesson lesson = data.get();
-        for (Widget oldWidget: lesson.getWidgets()) {
-          widgetRepository.deleteById(oldWidget.getId());
+    Optional<Lesson> data = lessonRepository.findById(lessonId);
+    if (data.isPresent()) {
+      Lesson lesson = data.get();
+      for (Widget widget : lesson.getWidgets()) {
+        int id = widget.getId();
+        boolean deleteWidgetFlag = true;
+        for (Widget newWidget : widgets) {
+          deleteWidgetFlag = deleteWidgetFlag && (newWidget.getId() != id);
         }
+        if (deleteWidgetFlag) {
+          widgetRepository.deleteById(widget.getId());
+        }
+      }
+      for (Widget widget : widgets) {
         widget.setLesson(lesson);
         widgetRepository.save(widget);
-      } else {
-        throw new LessonService.LessonNotFoundException();
       }
+    } else {
+      throw new LessonService.LessonNotFoundException();
     }
   }
 
   /**
    * Updates a widget
-   * @param widgetId the widget to update
+   *
+   * @param widgetId      the widget to update
    * @param updatedWidget the widget info to update with
    * @return the updated widget
    * @throws WidgetNotFoundException if the widget doesnt exist
@@ -138,6 +150,7 @@ public class WidgetService {
 
   /**
    * Deletes a widget
+   *
    * @param widgetId the id to delete
    * @throws WidgetNotFoundException if the widget doesnt exist
    */
