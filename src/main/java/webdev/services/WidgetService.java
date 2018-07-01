@@ -96,11 +96,13 @@ public class WidgetService {
    */
   @PostMapping("/api/lesson/{lessonId}/widget/save")
   public void saveAllWidgets(@PathVariable int lessonId, @RequestBody List<Widget> widgets) throws LessonService.LessonNotFoundException {
-    widgetRepository.deleteAll();
     for (Widget widget : widgets) {
       Optional<Lesson> data = lessonRepository.findById(lessonId);
       if (data.isPresent()) {
         Lesson lesson = data.get();
+        for (Widget oldWidget: lesson.getWidgets()) {
+          widgetRepository.deleteById(oldWidget.getId());
+        }
         widget.setLesson(lesson);
         widgetRepository.save(widget);
       } else {
