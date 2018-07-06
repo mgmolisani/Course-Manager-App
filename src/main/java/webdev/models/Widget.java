@@ -18,6 +18,7 @@ import javax.persistence.*;
  * This class also makes sub tables to handle the array of class names and the style object map.
  */
 @Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public class Widget {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
