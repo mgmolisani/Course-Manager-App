@@ -3,6 +3,9 @@ package webdev.models;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+/**
+ * Represents an Assignment (single table).
+ */
 @Entity
 public class Assignment extends Widget {
   private String title;

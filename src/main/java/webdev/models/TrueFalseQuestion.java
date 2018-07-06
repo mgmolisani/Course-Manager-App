@@ -2,6 +2,9 @@ package webdev.models;
 
 import javax.persistence.Entity;
 
+/**
+ * Represents a true false question
+ */
 @Entity
 public class TrueFalseQuestion
         extends Question {

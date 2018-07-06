@@ -10,6 +10,9 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 
+/**
+ * Represents a base question and used joined strategy
+ */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Question {

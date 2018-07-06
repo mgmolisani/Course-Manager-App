@@ -6,6 +6,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+/**
+ * Represents an Exam (single table).
+ */
 @Entity
 public class Exam extends Widget {
   private String title;

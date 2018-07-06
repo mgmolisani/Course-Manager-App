@@ -6,6 +6,9 @@ import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 
+/**
+ * Representa fill in the blank question
+ */
 @Entity
 public class FillBlankQuestion
         extends Question {
