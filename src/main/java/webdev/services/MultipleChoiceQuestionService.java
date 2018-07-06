@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import webdev.models.Exam;
@@ -54,7 +56,9 @@ public class MultipleChoiceQuestionService {
     question.setTitle(updatedQuestion.getTitle());
     question.setDescription(updatedQuestion.getDescription());
     question.setPoints(updatedQuestion.getPoints());
-    question.setChoices(updatedQuestion.getChoices());
+    List<String> choices = updatedQuestion.getChoices();
+    Collections.reverse(choices);
+    question.setChoices(choices);
     question.setCorrectChoice(updatedQuestion.getCorrectChoice());
     return questionRepository.save(question);
   }
