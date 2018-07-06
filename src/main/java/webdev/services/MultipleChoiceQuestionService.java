@@ -14,31 +14,31 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
-import webdev.models.EssayQuestion;
 import webdev.models.Exam;
-import webdev.repositories.EssayQuestionRepository;
+import webdev.models.MultipleChoiceQuestion;
 import webdev.repositories.ExamRepository;
+import webdev.repositories.MultipleChoiceQuestionRepository;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-public class EssayQuestionService {
+public class MultipleChoiceQuestionService {
   @Autowired
-  EssayQuestionRepository questionRepository;
+  MultipleChoiceQuestionRepository questionRepository;
   @Autowired
   ExamRepository examRepository;
 
-  @GetMapping("/api/essay/{questionId}")
-  public EssayQuestion findEssayQuestionById(@PathVariable int questionId) throws QuestionNotFoundException {
-    Optional<EssayQuestion> data = questionRepository.findById(questionId);
+  @GetMapping("/api/choice/{questionId}")
+  public MultipleChoiceQuestion findMultipleChoiceQuestionById(@PathVariable int questionId) throws QuestionNotFoundException {
+    Optional<MultipleChoiceQuestion> data = questionRepository.findById(questionId);
     if (data.isPresent()) {
       return data.get();
     }
     throw new QuestionNotFoundException();
   }
 
-  @PostMapping("/api/exam/{examId}/essay")
-  public EssayQuestion createEssayQuestion(@PathVariable int examId,
-                                           @RequestBody EssayQuestion question) throws WidgetService.WidgetNotFoundException {
+  @PostMapping("/api/exam/{examId}/choice")
+  public MultipleChoiceQuestion createMultipleChoiceQuestion(@PathVariable int examId,
+                                                             @RequestBody MultipleChoiceQuestion question) throws WidgetService.WidgetNotFoundException {
     Optional<Exam> data = examRepository.findById(examId);
     if (data.isPresent()) {
       Exam exam = data.get();
@@ -48,18 +48,20 @@ public class EssayQuestionService {
     throw new WidgetService.WidgetNotFoundException();
   }
 
-  @PutMapping("/api/essay")
-  public EssayQuestion updateEssayQuestion(@RequestBody EssayQuestion updatedQuestion) throws QuestionNotFoundException {
-    EssayQuestion question = this.findEssayQuestionById(updatedQuestion.getId());
+  @PutMapping("/api/choice")
+  public MultipleChoiceQuestion updateMultipleChoiceQuestion(@RequestBody MultipleChoiceQuestion updatedQuestion) throws QuestionNotFoundException {
+    MultipleChoiceQuestion question = this.findMultipleChoiceQuestionById(updatedQuestion.getId());
     question.setTitle(updatedQuestion.getTitle());
     question.setDescription(updatedQuestion.getDescription());
     question.setPoints(updatedQuestion.getPoints());
+    question.setChoices(updatedQuestion.getChoices());
+    question.setCorrectChoice(updatedQuestion.getCorrectChoice());
     return questionRepository.save(question);
   }
 
-  @DeleteMapping("/api/essay/{questionId}")
-  public void deleteEssayQuestion(@PathVariable int questionId) throws QuestionNotFoundException {
-    this.findEssayQuestionById(questionId);
+  @DeleteMapping("/api/choice/{questionId}")
+  public void deleteMultipleChoiceQuestion(@PathVariable int questionId) throws QuestionNotFoundException {
+    this.findMultipleChoiceQuestionById(questionId);
     questionRepository.deleteById(questionId);
   }
 

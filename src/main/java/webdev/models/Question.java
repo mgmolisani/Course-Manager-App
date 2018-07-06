@@ -1,5 +1,7 @@
 package webdev.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,18 +10,16 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Question {
   @Id
-  @GeneratedValue(strategy=GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
   private String title;
   private String description;
   private double points;
-  private String questionType;
+  private int questionType;
   @ManyToOne
   @JsonIgnore
   private Exam exam;
@@ -60,11 +60,11 @@ public class Question {
     this.points = points;
   }
 
-  public String getQuestionType() {
+  public int getQuestionType() {
     return questionType;
   }
 
-  public void setQuestionType(String questionType) {
+  public void setQuestionType(int questionType) {
     this.questionType = questionType;
   }
 

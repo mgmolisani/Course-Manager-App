@@ -11,17 +11,17 @@ public class FillBlankQuestion
         extends Question {
   @ElementCollection
   @CollectionTable
-  private Map<String, String> answer;
+  private Map<String, String> answers;
 
   public FillBlankQuestion() {
     super();
   }
 
-  public Map<String, String> getAnswer() {
-    return answer;
+  public Map<String, String> getAnswers() {
+    return answers;
   }
 
-  public void setAnswer(Map<String, String> answer) {
-    this.answer = answer;
+  public void setAnswers(Map<String, String> answers) {
+    this.answers = answers;
   }
 }

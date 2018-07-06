@@ -14,31 +14,31 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
-import webdev.models.EssayQuestion;
 import webdev.models.Exam;
-import webdev.repositories.EssayQuestionRepository;
+import webdev.models.TrueFalseQuestion;
 import webdev.repositories.ExamRepository;
+import webdev.repositories.TrueFalseQuestionRepository;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-public class EssayQuestionService {
+public class TrueFalseQuestionService {
   @Autowired
-  EssayQuestionRepository questionRepository;
+  TrueFalseQuestionRepository questionRepository;
   @Autowired
   ExamRepository examRepository;
 
-  @GetMapping("/api/essay/{questionId}")
-  public EssayQuestion findEssayQuestionById(@PathVariable int questionId) throws QuestionNotFoundException {
-    Optional<EssayQuestion> data = questionRepository.findById(questionId);
+  @GetMapping("/api/truefalse/{questionId}")
+  public TrueFalseQuestion findTrueFalseQuestionById(@PathVariable int questionId) throws QuestionNotFoundException {
+    Optional<TrueFalseQuestion> data = questionRepository.findById(questionId);
     if (data.isPresent()) {
       return data.get();
     }
     throw new QuestionNotFoundException();
   }
 
-  @PostMapping("/api/exam/{examId}/essay")
-  public EssayQuestion createEssayQuestion(@PathVariable int examId,
-                                           @RequestBody EssayQuestion question) throws WidgetService.WidgetNotFoundException {
+  @PostMapping("/api/exam/{examId}/truefalse")
+  public TrueFalseQuestion createTrueFalseQuestion(@PathVariable int examId,
+                                                   @RequestBody TrueFalseQuestion question) throws WidgetService.WidgetNotFoundException {
     Optional<Exam> data = examRepository.findById(examId);
     if (data.isPresent()) {
       Exam exam = data.get();
@@ -48,18 +48,19 @@ public class EssayQuestionService {
     throw new WidgetService.WidgetNotFoundException();
   }
 
-  @PutMapping("/api/essay")
-  public EssayQuestion updateEssayQuestion(@RequestBody EssayQuestion updatedQuestion) throws QuestionNotFoundException {
-    EssayQuestion question = this.findEssayQuestionById(updatedQuestion.getId());
+  @PutMapping("/api/truefalse")
+  public TrueFalseQuestion updateTrueFalseQuestion(@RequestBody TrueFalseQuestion updatedQuestion) throws QuestionNotFoundException {
+    TrueFalseQuestion question = this.findTrueFalseQuestionById(updatedQuestion.getId());
     question.setTitle(updatedQuestion.getTitle());
     question.setDescription(updatedQuestion.getDescription());
     question.setPoints(updatedQuestion.getPoints());
+    question.setIsTrue(updatedQuestion.getIsTrue());
     return questionRepository.save(question);
   }
 
-  @DeleteMapping("/api/essay/{questionId}")
-  public void deleteEssayQuestion(@PathVariable int questionId) throws QuestionNotFoundException {
-    this.findEssayQuestionById(questionId);
+  @DeleteMapping("/api/truefalse/{questionId}")
+  public void deleteTrueFalseQuestion(@PathVariable int questionId) throws QuestionNotFoundException {
+    this.findTrueFalseQuestionById(questionId);
     questionRepository.deleteById(questionId);
   }
 

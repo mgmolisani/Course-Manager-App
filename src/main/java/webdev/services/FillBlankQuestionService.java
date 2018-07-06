@@ -14,31 +14,31 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
-import webdev.models.EssayQuestion;
 import webdev.models.Exam;
-import webdev.repositories.EssayQuestionRepository;
+import webdev.models.FillBlankQuestion;
 import webdev.repositories.ExamRepository;
+import webdev.repositories.FillBlankQuestionRepository;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-public class EssayQuestionService {
+public class FillBlankQuestionService {
   @Autowired
-  EssayQuestionRepository questionRepository;
+  FillBlankQuestionRepository questionRepository;
   @Autowired
   ExamRepository examRepository;
 
-  @GetMapping("/api/essay/{questionId}")
-  public EssayQuestion findEssayQuestionById(@PathVariable int questionId) throws QuestionNotFoundException {
-    Optional<EssayQuestion> data = questionRepository.findById(questionId);
+  @GetMapping("/api/blank/{questionId}")
+  public FillBlankQuestion findFillBlankQuestionById(@PathVariable int questionId) throws QuestionNotFoundException {
+    Optional<FillBlankQuestion> data = questionRepository.findById(questionId);
     if (data.isPresent()) {
       return data.get();
     }
     throw new QuestionNotFoundException();
   }
 
-  @PostMapping("/api/exam/{examId}/essay")
-  public EssayQuestion createEssayQuestion(@PathVariable int examId,
-                                           @RequestBody EssayQuestion question) throws WidgetService.WidgetNotFoundException {
+  @PostMapping("/api/exam/{examId}/blank")
+  public FillBlankQuestion createFillBlankQuestion(@PathVariable int examId,
+                                                   @RequestBody FillBlankQuestion question) throws WidgetService.WidgetNotFoundException {
     Optional<Exam> data = examRepository.findById(examId);
     if (data.isPresent()) {
       Exam exam = data.get();
@@ -48,18 +48,19 @@ public class EssayQuestionService {
     throw new WidgetService.WidgetNotFoundException();
   }
 
-  @PutMapping("/api/essay")
-  public EssayQuestion updateEssayQuestion(@RequestBody EssayQuestion updatedQuestion) throws QuestionNotFoundException {
-    EssayQuestion question = this.findEssayQuestionById(updatedQuestion.getId());
+  @PutMapping("/api/blank")
+  public FillBlankQuestion updateFillBlankQuestion(@RequestBody FillBlankQuestion updatedQuestion) throws QuestionNotFoundException {
+    FillBlankQuestion question = this.findFillBlankQuestionById(updatedQuestion.getId());
     question.setTitle(updatedQuestion.getTitle());
     question.setDescription(updatedQuestion.getDescription());
     question.setPoints(updatedQuestion.getPoints());
+    question.setAnswers(updatedQuestion.getAnswers());
     return questionRepository.save(question);
   }
 
-  @DeleteMapping("/api/essay/{questionId}")
-  public void deleteEssayQuestion(@PathVariable int questionId) throws QuestionNotFoundException {
-    this.findEssayQuestionById(questionId);
+  @DeleteMapping("/api/blank/{questionId}")
+  public void deleteFillBlankQuestion(@PathVariable int questionId) throws QuestionNotFoundException {
+    this.findFillBlankQuestionById(questionId);
     questionRepository.deleteById(questionId);
   }
 

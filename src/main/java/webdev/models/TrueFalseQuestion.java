@@ -11,11 +11,11 @@ public class TrueFalseQuestion
     super();
   }
 
-  public boolean isTrue() {
+  public boolean getIsTrue() {
     return isTrue;
   }
 
-  public void setTrue(boolean aTrue) {
-    isTrue = aTrue;
+  public void setIsTrue(boolean isTrue) {
+    this.isTrue = isTrue;
   }
 }
