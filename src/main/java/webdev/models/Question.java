@@ -18,6 +18,7 @@ public class Question {
   private int id;
   private String title;
   private String description;
+  private double points;
   private String questionType;
   @ManyToOne
   @JsonIgnore
@@ -49,6 +50,14 @@ public class Question {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public double getPoints() {
+    return points;
+  }
+
+  public void setPoints(double points) {
+    this.points = points;
   }
 
   public String getQuestionType() {

@@ -1,14 +1,15 @@
 package webdev.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Exam extends Widget {
   private String title;
+  @Column(columnDefinition = "text")
   private String description;
   private double points;
   @OneToMany(mappedBy="exam", orphanRemoval = true)
