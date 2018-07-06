@@ -48,14 +48,14 @@ public class ExamService {
     if (data.isPresent()) {
       Lesson lesson = data.get();
       List<Widget> widgets = lesson.getWidgets();
-      List<Exam> exams = new ArrayList<>();
+      List<Exam> assignments = new ArrayList<>();
       for (Widget widget : widgets) {
         String widgetType = widget.getWidgetType();
         if (widgetType != null && widgetType.equals("exam")) {
-          exams.add((Exam) widget);
+          assignments.add((Exam) widget);
         }
       }
-      return exams;
+      return assignments;
     }
     throw new LessonService.LessonNotFoundException();
   }
